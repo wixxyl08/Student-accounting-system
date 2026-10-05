@@ -7,6 +7,11 @@
                 <router-link to="/organizations" class="menu-item">🏢 Организации</router-link>
                 <router-link to="/employees" class="menu-item">👥 Сотрудники</router-link>
                 <router-link to="/programs" class="menu-item">📚 Программы</router-link>
+                <router-link to="/groups" class="menu-item">🎓 Группы</router-link>
+                <router-link to="/notifications" class="menu-item">🔔 Уведомления</router-link>
+                <router-link to="/contracts" class="menu-item">📄 Договоры</router-link>
+                <router-link v-if="auth.isAdmin" to="/admin/users" class="menu-item">👤 Пользователи</router-link>
+<router-link v-if="auth.isAdmin" to="/admin/activity-log" class="menu-item">📋 Журнал</router-link>
             </nav>
             <div class="user-info">
                 <div class="user-name">{{ auth.user?.full_name }}</div>

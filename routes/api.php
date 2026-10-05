@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\EnrollmentController;
 use App\Http\Controllers\Api\NotificationController;
 use App\Http\Controllers\Api\ContractController;
 use App\Http\Controllers\Api\ExportController;
+use App\Http\Controllers\Api\Admin\ActivityLogController;
 /*
 Публичные маршруты
 */
@@ -48,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('notifications', [ExportController::class, 'notifications']);
         });
         Route::get('educations/{education}/download', [EducationController::class, 'download']);
+        Route::get('dashboard', [\App\Http\Controllers\Api\DashboardController::class, 'index']);
         });
 });
 
@@ -66,6 +68,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])
         });
         Route::apiResource('users', AdminUserController::class);
         Route::post('users/{user}/toggle-block', [AdminUserController::class, 'toggleBlock']);
+                Route::get('activity-logs', [\App\Http\Controllers\Api\Admin\ActivityLogController::class, 'index']);
     });
 
 /*

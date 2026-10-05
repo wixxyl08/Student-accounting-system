@@ -32,6 +32,36 @@ const routes = [
         component: () => import('../views/Programs.vue'),
         meta: { auth: true },
     },
+    {
+        path: '/groups',
+        name: 'groups',
+        component: () => import('../views/Groups.vue'),
+        meta: { auth: true },
+    },
+    {
+        path: '/notifications',
+        name: 'notifications',
+        component: () => import('../views/Notifications.vue'),
+        meta: { auth: true },
+    },
+    {
+        path: '/contracts',
+        name: 'contracts',
+        component: () => import('../views/Contracts.vue'),
+        meta: { auth: true },
+    },
+    {
+        path: '/admin/users',
+        name: 'admin-users',
+        component: () => import('../views/Users.vue'),
+        meta: { auth: true, role: 'admin' },
+    },
+    {
+        path: '/admin/activity-log',
+        name: 'admin-activity-log',
+        component: () => import('../views/ActivityLog.vue'),
+        meta: { auth: true, role: 'admin' },
+    },
 ];
 
 const router = createRouter({
@@ -39,18 +69,18 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
     const auth = useAuthStore();
 
     if (to.meta.auth && !auth.isAuthenticated) {
-        return next('/login');
+        return '/login';
     }
 
     if (to.meta.guest && auth.isAuthenticated) {
-        return next('/');
+        return '/';
     }
 
-    next();
+    return true;
 });
 
 export default router;

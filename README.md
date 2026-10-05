@@ -1,59 +1,129 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Система учёта и регистрации обучающихся
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Веб-приложение для автоматизации учёта обучающихся, организаций, программ обучения и формирования договоров.
 
-## About Laravel
+## Стек технологий
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Backend:** PHP 8.3 + Laravel 12
+- **Frontend:** Vue 3 + Vite
+- **База данных:** MySQL 26.7
+- **Аутентификация:** Laravel Sanctum (токены)
+- **API:** REST
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Возможности
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Организации** — CRUD, реквизиты, контакты, привязка сотрудников
+- **Сотрудники** — CRUD, привязка к организации или физлицо, статус «Активен/Уволен»
+- **Образование** — записи с уровнем, заведением, годом, прикрепление файлов дипломов
+- **Программы обучения** — CRUD, цена, периодичность повторного обучения, архив
+- **Группы обучения** — CRUD, автогенерация названий, статусы
+- **Зачисления** — связка сотрудника и группы, проверки, авто-расчёт даты повторного обучения
+- **Уведомления** — список тех, кому пора проходить повторное обучение
+- **Договоры** — генерация DOCX (PHPWord) + PDF (DomPDF), реестр, скачивание
+- **Экспорт XLSX** — организации, сотрудники, группы, уведомления
+- **Админка** — управление пользователями, журнал действий (Observer)
+- **Роли** — администратор (полный доступ), методист (ограниченный)
 
-## Learning Laravel
+## Установка
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Требования
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.2+
+- Composer 2.x
+- Node.js 20+
+- MySQL 8+ или MariaDB 10+
+- Git
 
-## Laravel Sponsors
+### Шаги
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. **Клонировать проект:**
+   ```bash
+   git clone https://github.com/wixxyl08/Student-accounting-system.git
+   cd Student-accounting-system
 
-### Premium Partners
+2. **Установить зависимости:**
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+   composer install
+   npm install
 
-## Contributing
+3. **Настроить .env:**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   cp .env.example .env
+   php artisan key:generate
 
-## Code of Conduct
+   Открой .env и настрой БД:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=student_system
+   DB_USERNAME=root
+   DB_PASSWORD=
 
-## Security Vulnerabilities
+4. **Создать БД:**
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   CREATE DATABASE student_system CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-## License
+5. **Запустить миграции и сидеры:**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+   php artisan migrate --seed
+
+6. **Создать симлинк для файлов:**
+
+   php artisan storage:link
+
+7. **Запустить:**
+
+   php artisan serve
+   npm run dev
+
+8. **Открыть в браузере:**
+
+   http://127.0.0.1:8000
+
+## Тестовые учётные записи
+
+- admin / admin123 — Администратор
+- methodist / methodist123 — Методист
+
+## Структура проекта
+
+app/Exports/ — экспорты XLSX
+app/Http/Controllers/Api/ — контроллеры
+app/Http/Middleware/ — CheckRole
+app/Http/Requests/ — валидация
+app/Http/Resources/ — API-ответы
+app/Models/ — модели
+app/Observers/ — observers (журнал)
+database/migrations/ — миграции
+database/seeders/ — сидеры
+resources/js/api/ — axios-запросы
+resources/js/components/ — компоненты
+resources/js/layouts/ — MainLayout
+resources/js/router/ — маршруты
+resources/js/stores/ — Pinia
+resources/js/views/ — страницы
+
+## Основные API-эндпоинты
+
+- POST /api/login — Вход
+- POST /api/logout — Выход
+- GET /api/me — Текущий пользователь
+- /api/organizations — CRUD организаций
+- /api/employees — CRUD сотрудников
+- /api/educations — CRUD образования
+- /api/programs — CRUD программ
+- /api/groups — CRUD групп
+- /api/enrollments — CRUD зачислений
+- GET /api/notifications — Уведомления
+- GET /api/contracts — Реестр договоров
+- GET /api/contracts/{id}/download-docx — Скачать DOCX
+- GET /api/contracts/{id}/download-pdf — Скачать PDF
+- GET /api/export/organizations — Экспорт XLSX
+- /api/admin/users — Управление пользователями
+- GET /api/admin/activity-logs — Журнал действий
+- GET /api/dashboard — Статистика
+
+## Лицензия
+
+Учебный проект.
