@@ -7,6 +7,9 @@ export const contractsApi = {
     show(id) {
         return api.get(`/contracts/${id}`);
     },
+    create(data) {                          
+        return api.post('/contracts', data); 
+    },                                       
     remove(id) {
         return api.delete(`/contracts/${id}`);
     },

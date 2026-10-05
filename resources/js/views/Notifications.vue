@@ -49,8 +49,8 @@
                         <td>{{ item.next_training_date }}</td>
                         <td>
                             <span :class="['days', item.urgency_color]">
-                                {{ item.days_until_retraining }}
-                            </span>
+                                {{ Math.round(item.days_until_retraining) }}
+                            </span>     
                         </td>
                     </tr>
                 </tbody>

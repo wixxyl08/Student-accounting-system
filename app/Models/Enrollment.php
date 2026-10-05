@@ -127,7 +127,7 @@ class Enrollment extends Model
             return null;
         }
 
-        return now()->diffInDays($this->next_training_date, false);
+        return (int) now()->startOfDay()->diffInDays($this->next_training_date->startOfDay(), false);
     }
 
     /**
@@ -136,20 +136,20 @@ class Enrollment extends Model
      */
     public function getUrgencyColorAttribute()
     {
-        $days = $this->getDaysUntilRetrainingAttribute();
+    $days = $this->getDaysUntilRetrainingAttribute();
 
-        if ($days === null) {
-            return 'gray';
-        }
+    if ($days === null) {
+        return 'gray';
+    }
 
-        if ($days > 120) {
-            return 'green';
-        }
+    if ($days > 120) {
+        return 'green';
+    }
 
-        if ($days >= 60) {
-            return 'yellow';
-        }
+    if ($days >= 60) {
+        return 'yellow';
+    }
 
-        return 'red';
+    return 'red';
     }
 }
