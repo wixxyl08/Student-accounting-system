@@ -36,93 +36,126 @@
 
 ### Шаги
 
-1. **Клонировать проект:**
-   ```bash
-   git clone https://github.com/wixxyl08/Student-accounting-system.git
-   cd Student-accounting-system
+**1. Клонировать проект**
 
-2. **Установить зависимости:**
+```bash
+git clone https://github.com/wixxyl08/Student-accounting-system.git
+cd Student-accounting-system
+```
 
-   composer install
-   npm install
+**2. Установить зависимости**
 
-3. **Настроить .env:**
+```bash
+composer install
+npm install
+```
 
-   cp .env.example .env
-   php artisan key:generate
+**3. Настроить .env**
 
-   Открой .env и настрой БД:
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-   DB_CONNECTION=mysql
-   DB_HOST=127.0.0.1
-   DB_PORT=3306
-   DB_DATABASE=student_system
-   DB_USERNAME=root
-   DB_PASSWORD=
+Открой `.env` и настрой БД:
 
-4. **Создать БД:**
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=student_system
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-   CREATE DATABASE student_system CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+**4. Создать БД**
 
-5. **Запустить миграции и сидеры:**
+```sql
+CREATE DATABASE student_system CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
 
-   php artisan migrate --seed
+**5. Запустить миграции и сидеры**
 
-6. **Создать симлинк для файлов:**
+```bash
+php artisan migrate --seed
+```
 
-   php artisan storage:link
+**6. Создать симлинк для файлов**
 
-7. **Запустить:**
+```bash
+php artisan storage:link
+```
 
-   php artisan serve
-   npm run dev
+**7. Запустить**
 
-8. **Открыть в браузере:**
+```bash
+# Терминал 1 — Laravel
+php artisan serve
 
-   http://127.0.0.1:8000
+# Терминал 2 — Vite
+npm run dev
+```
+
+**8. Открыть в браузере**
+
+```
+http://127.0.0.1:8000
+```
 
 ## Тестовые учётные записи
 
-- admin / admin123 — Администратор
-- methodist / methodist123 — Методист
+| Логин | Пароль | Роль |
+|---|---|---|
+| `admin` | `admin123` | Администратор |
+| `methodist` | `methodist123` | Методист |
 
 ## Структура проекта
 
-app/Exports/ — экспорты XLSX
-app/Http/Controllers/Api/ — контроллеры
-app/Http/Middleware/ — CheckRole
-app/Http/Requests/ — валидация
-app/Http/Resources/ — API-ответы
-app/Models/ — модели
-app/Observers/ — observers (журнал)
-database/migrations/ — миграции
-database/seeders/ — сидеры
-resources/js/api/ — axios-запросы
-resources/js/components/ — компоненты
-resources/js/layouts/ — MainLayout
-resources/js/router/ — маршруты
-resources/js/stores/ — Pinia
-resources/js/views/ — страницы
+```
+app/
+├── Exports/             — экспорты XLSX
+├── Http/
+│   ├── Controllers/Api/ — контроллеры
+│   ├── Middleware/      — CheckRole
+│   ├── Requests/        — валидация
+│   └── Resources/       — API-ответы
+├── Models/              — модели
+└── Observers/           — observers (журнал)
+
+database/
+├── migrations/          — миграции
+└── seeders/             — сидеры
+
+resources/js/
+├── api/                 — axios-запросы
+├── components/          — компоненты
+├── layouts/             — MainLayout
+├── router/              — маршруты
+├── stores/              — Pinia
+└── views/               — страницы
+```
 
 ## Основные API-эндпоинты
 
-- POST /api/login — Вход
-- POST /api/logout — Выход
-- GET /api/me — Текущий пользователь
-- /api/organizations — CRUD организаций
-- /api/employees — CRUD сотрудников
-- /api/educations — CRUD образования
-- /api/programs — CRUD программ
-- /api/groups — CRUD групп
-- /api/enrollments — CRUD зачислений
-- GET /api/notifications — Уведомления
-- GET /api/contracts — Реестр договоров
-- GET /api/contracts/{id}/download-docx — Скачать DOCX
-- GET /api/contracts/{id}/download-pdf — Скачать PDF
-- GET /api/export/organizations — Экспорт XLSX
-- /api/admin/users — Управление пользователями
-- GET /api/admin/activity-logs — Журнал действий
-- GET /api/dashboard — Статистика
+| Метод | URL | Описание |
+|---|---|---|
+| POST | `/api/login` | Вход |
+| POST | `/api/logout` | Выход |
+| GET | `/api/me` | Текущий пользователь |
+| — | `/api/organizations` | CRUD организаций |
+| — | `/api/employees` | CRUD сотрудников |
+| — | `/api/educations` | CRUD образования |
+| — | `/api/programs` | CRUD программ |
+| — | `/api/groups` | CRUD групп |
+| — | `/api/enrollments` | CRUD зачислений |
+| GET | `/api/notifications` | Уведомления |
+| GET | `/api/contracts` | Реестр договоров |
+| GET | `/api/contracts/{id}/download-docx` | Скачать DOCX |
+| GET | `/api/contracts/{id}/download-pdf` | Скачать PDF |
+| GET | `/api/export/organizations` | Экспорт XLSX |
+| — | `/api/admin/users` | Управление пользователями |
+| GET | `/api/admin/activity-logs` | Журнал действий |
+| GET | `/api/dashboard` | Статистика |
 
 ## Лицензия
 
