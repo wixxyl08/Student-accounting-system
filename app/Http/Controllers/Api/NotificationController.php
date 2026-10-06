@@ -97,31 +97,31 @@ class NotificationController extends Controller
      * GET /api/notifications/stats
      */
     public function stats()
-    {
-        $base = Enrollment::query()
-            ->where('status', 'completed')
-            ->whereNotNull('next_training_date')
-            ->whereHas('employee', fn($q) => $q->where('status', 'active'));
+{
+    $base = Enrollment::query()
+        ->where('status', 'completed')
+        ->whereNotNull('next_training_date')
+        ->whereHas('employee', fn($q) => $q->where('status', 'active'));
 
-        $all = $base->count();
+    $all = $base->count();
 
-        $overdue = (clone $base)
-            ->where('next_training_date', '<', now())
-            ->count();
+    $red = (clone $base)
+        ->where('next_training_date', '<', now()->addDays(60))
+        ->count();
 
-        $in60Days = (clone $base)
-            ->whereBetween('next_training_date', [now(), now()->addDays(60)])
-            ->count();
+    $yellow = (clone $base)
+        ->whereBetween('next_training_date', [now()->addDays(60), now()->addDays(120)])
+        ->count();
 
-        $in120Days = (clone $base)
-            ->whereBetween('next_training_date', [now()->addDays(61), now()->addDays(120)])
-            ->count();
+    $green = (clone $base)
+        ->where('next_training_date', '>', now()->addDays(120))
+        ->count();
 
-        return response()->json([
-            'total' => $all,
-            'overdue' => $overdue,
-            'in_60_days' => $in60Days,
-            'in_120_days' => $in120Days,
-        ]);
+    return response()->json([
+        'total'    => $all,
+        'red'      => $red,      // менее 60 — включая просроченные
+        'yellow'   => $yellow,   // 60–120
+        'green'    => $green,    // более 120
+    ]);
     }
 }

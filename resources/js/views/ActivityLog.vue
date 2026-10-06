@@ -86,7 +86,15 @@ const loadData = async () => {
             per_page: 20,
         });
         logs.value = data.data;
-        meta.value = data.meta;
+        // Laravel отдаёт meta прямо в корне ответа
+        meta.value = {
+            current_page: data.current_page,
+            last_page:    data.last_page,
+            per_page:     data.per_page,
+            total:        data.total,
+            from:         data.from,
+            to:           data.to,
+        };
     } catch (e) {
         console.error(e);
     } finally {

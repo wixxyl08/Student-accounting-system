@@ -134,22 +134,18 @@ class Enrollment extends Model
      * Аксессор: цветовая индикация для уведомлений
      * зелёный — более 120 дней, жёлтый — 60-120, красный — менее 60
      */
-    public function getUrgencyColorAttribute()
-    {
-    $days = $this->getDaysUntilRetrainingAttribute();
+    public function getUrgencyColorAttribute(): string
+{
+    $days = $this->days_until_retraining;
 
-    if ($days === null) {
+    if ($days === null) 
         return 'gray';
-    }
-
-    if ($days > 120) {
-        return 'green';
-    }
-
-    if ($days >= 60) {
-        return 'yellow';
-    }
-
-    return 'red';
-    }
+    if ($days < 0)      
+        return 'red';      // просрочено
+    if ($days <= 60)    
+        return 'red';      // 0–60 дней
+    if ($days <= 120)   
+        return 'yellow';   // 60–120 дней
+    return 'green';                        // 120+ дней
+}
 }

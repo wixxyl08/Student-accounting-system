@@ -5,23 +5,23 @@
         </div>
 
         <div class="stats">
-            <div class="stat-card">
-                <div class="stat-value">{{ stats.total || 0 }}</div>
-                <div class="stat-label">Всего</div>
-            </div>
-            <div class="stat-card red">
-                <div class="stat-value">{{ stats.overdue || 0 }}</div>
-                <div class="stat-label">Просрочено</div>
-            </div>
-            <div class="stat-card yellow">
-                <div class="stat-value">{{ stats.in_60_days || 0 }}</div>
-                <div class="stat-label">В течение 60 дней</div>
-            </div>
-            <div class="stat-card green">
-                <div class="stat-value">{{ stats.in_120_days || 0 }}</div>
-                <div class="stat-label">60–120 дней</div>
-            </div>
-        </div>
+    <div class="stat-card">
+        <div class="stat-value">{{ stats.total || 0 }}</div>
+        <div class="stat-label">Всего</div>
+    </div>
+    <div class="stat-card red">
+        <div class="stat-value">{{ stats.red || 0 }}</div>
+        <div class="stat-label">Менее 60 дней</div>
+    </div>
+    <div class="stat-card yellow">
+        <div class="stat-value">{{ stats.yellow || 0 }}</div>
+        <div class="stat-label">60–120 дней</div>
+    </div>
+    <div class="stat-card green">
+        <div class="stat-value">{{ stats.green || 0 }}</div>
+        <div class="stat-label">Более 120 дней</div>
+    </div>
+    </div>
 
         <div class="table-wrap">
             <div v-if="loading" class="loading">Загрузка...</div>
@@ -71,9 +71,9 @@ const loading = ref(false);
 const loadData = async () => {
     loading.value = true;
     try {
-        const [listRes, statsRes] = await Promise.all([
-            notificationsApi.list({ per_page: 100 }),
-            notificationsApi.stats(),
+        const [listRes, statsRes] = await Promise.all([        
+        notificationsApi.list({ per_page: 100, show_all: true }),
+        notificationsApi.stats(),
         ]);
         items.value = listRes.data.data;
         stats.value = statsRes.data;
